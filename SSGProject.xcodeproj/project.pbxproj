@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -13,9 +13,15 @@
 		F41A699525EC69A10050F70B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F41A699325EC69A10050F70B /* Main.storyboard */; };
 		F41A699725EC69A40050F70B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F41A699625EC69A40050F70B /* Assets.xcassets */; };
 		F41A699A25EC69A40050F70B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F41A699825EC69A40050F70B /* LaunchScreen.storyboard */; };
+		F41A69A525EC6E4B0050F70B /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41A69A425EC6E4B0050F70B /* Extensions.swift */; };
+		F41A69B925EC73710050F70B /* VideoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41A69B825EC73710050F70B /* VideoCell.swift */; };
+		FF5051791D33F91C5F5AFF7D /* Pods_SSGProject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 472812A7E113A0145751BE40 /* Pods_SSGProject.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		472812A7E113A0145751BE40 /* Pods_SSGProject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SSGProject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4A5967551B0AABA81E38B20E /* Pods-SSGProject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SSGProject.release.xcconfig"; path = "Target Support Files/Pods-SSGProject/Pods-SSGProject.release.xcconfig"; sourceTree = "<group>"; };
+		E168954525F867318DCCE6C4 /* Pods-SSGProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SSGProject.debug.xcconfig"; path = "Target Support Files/Pods-SSGProject/Pods-SSGProject.debug.xcconfig"; sourceTree = "<group>"; };
 		F41A698A25EC69A10050F70B /* SSGProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SSGProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F41A698D25EC69A10050F70B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F41A698F25EC69A10050F70B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -24,6 +30,9 @@
 		F41A699625EC69A40050F70B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F41A699925EC69A40050F70B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F41A699B25EC69A40050F70B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F41A69A425EC6E4B0050F70B /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		F41A69B225EC72B80050F70B /* SSGProject-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SSGProject-Bridging-Header.h"; sourceTree = "<group>"; };
+		F41A69B825EC73710050F70B /* VideoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,17 +40,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF5051791D33F91C5F5AFF7D /* Pods_SSGProject.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		27F291656C7D130760520948 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				E168954525F867318DCCE6C4 /* Pods-SSGProject.debug.xcconfig */,
+				4A5967551B0AABA81E38B20E /* Pods-SSGProject.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		D1ECF37075B1F6C32A07BD49 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				472812A7E113A0145751BE40 /* Pods_SSGProject.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		F41A698125EC69A10050F70B = {
 			isa = PBXGroup;
 			children = (
 				F41A698C25EC69A10050F70B /* SSGProject */,
 				F41A698B25EC69A10050F70B /* Products */,
+				27F291656C7D130760520948 /* Pods */,
+				D1ECF37075B1F6C32A07BD49 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -56,15 +85,58 @@
 		F41A698C25EC69A10050F70B /* SSGProject */ = {
 			isa = PBXGroup;
 			children = (
+				F41A69AA25EC71270050F70B /* Service */,
+				F41A69A325EC6E3D0050F70B /* Utils */,
+				F41A69A925EC711E0050F70B /* Model */,
+				F41A69A825EC711A0050F70B /* View */,
+				F41A69A725EC710C0050F70B /* Controller */,
 				F41A698D25EC69A10050F70B /* AppDelegate.swift */,
 				F41A698F25EC69A10050F70B /* SceneDelegate.swift */,
-				F41A699125EC69A10050F70B /* ViewController.swift */,
 				F41A699325EC69A10050F70B /* Main.storyboard */,
 				F41A699625EC69A40050F70B /* Assets.xcassets */,
 				F41A699825EC69A40050F70B /* LaunchScreen.storyboard */,
 				F41A699B25EC69A40050F70B /* Info.plist */,
+				F41A69B225EC72B80050F70B /* SSGProject-Bridging-Header.h */,
 			);
 			path = SSGProject;
+			sourceTree = "<group>";
+		};
+		F41A69A325EC6E3D0050F70B /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				F41A69A425EC6E4B0050F70B /* Extensions.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		F41A69A725EC710C0050F70B /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				F41A699125EC69A10050F70B /* ViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		F41A69A825EC711A0050F70B /* View */ = {
+			isa = PBXGroup;
+			children = (
+				F41A69B825EC73710050F70B /* VideoCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		F41A69A925EC711E0050F70B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		F41A69AA25EC71270050F70B /* Service */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Service;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -74,9 +146,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F41A699E25EC69A40050F70B /* Build configuration list for PBXNativeTarget "SSGProject" */;
 			buildPhases = (
+				95FEBBFD5090E167C2A6078E /* [CP] Check Pods Manifest.lock */,
 				F41A698625EC69A10050F70B /* Sources */,
 				F41A698725EC69A10050F70B /* Frameworks */,
 				F41A698825EC69A10050F70B /* Resources */,
+				494ACF3C6C80372893E122F7 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -98,6 +172,7 @@
 				TargetAttributes = {
 					F41A698925EC69A10050F70B = {
 						CreatedOnToolsVersion = 12.4;
+						LastSwiftMigration = 1240;
 					};
 				};
 			};
@@ -132,14 +207,58 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		494ACF3C6C80372893E122F7 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SSGProject/Pods-SSGProject-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SSGProject/Pods-SSGProject-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SSGProject/Pods-SSGProject-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		95FEBBFD5090E167C2A6078E /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SSGProject-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		F41A698625EC69A10050F70B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F41A69B925EC73710050F70B /* VideoCell.swift in Sources */,
 				F41A699225EC69A10050F70B /* ViewController.swift in Sources */,
 				F41A698E25EC69A10050F70B /* AppDelegate.swift in Sources */,
 				F41A699025EC69A10050F70B /* SceneDelegate.swift in Sources */,
+				F41A69A525EC6E4B0050F70B /* Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -283,9 +402,11 @@
 		};
 		F41A699F25EC69A40050F70B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E168954525F867318DCCE6C4 /* Pods-SSGProject.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = S3646H7837;
 				INFOPLIST_FILE = SSGProject/Info.plist;
@@ -295,6 +416,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = kr.hyeoni.SSGProject;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "SSGProject/SSGProject-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -302,9 +425,11 @@
 		};
 		F41A69A025EC69A40050F70B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4A5967551B0AABA81E38B20E /* Pods-SSGProject.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = S3646H7837;
 				INFOPLIST_FILE = SSGProject/Info.plist;
@@ -314,6 +439,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = kr.hyeoni.SSGProject;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "SSGProject/SSGProject-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
