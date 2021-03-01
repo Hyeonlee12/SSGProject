@@ -13,7 +13,7 @@ protocol VideoStateDelegate: class {
 }
 
 protocol DescriptionDelegate: class {
-	func handleMore(expand: Bool, indexPath: IndexPath)
+	func handleMore(expand: Bool, indexPath: IndexPath, id: String)
 }
 
 class VideoCell: UICollectionViewCell {
@@ -85,7 +85,6 @@ class VideoCell: UICollectionViewCell {
 		titleLabel.text = ""
 		publishedAtLabel.text = ""
 		descriptionLabel.text = ""
-		descriptionLabel.sizeToFit()
 		setNeedsLayout()
 		layoutIfNeeded()
 	}
@@ -115,6 +114,8 @@ class VideoCell: UICollectionViewCell {
 		moreButton.anchor(top: descriptionLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor,
 											paddingTop: 10)
 		moreButton.addTarget(self, action: #selector(handleMoreButton(_:)), for: .touchUpInside)
+		
+		layoutIfNeeded()
 	}
 	
 	func configure() {
@@ -143,7 +144,7 @@ class VideoCell: UICollectionViewCell {
 	
 	@objc func handleMoreButton(_ sender: UIButton) {
 		expand = !expand
-		self.descriptionDelegate?.handleMore(expand: expand, indexPath: indexPath!)
+		self.descriptionDelegate?.handleMore(expand: expand, indexPath: indexPath!, id: video!.id)
 	}
 }
 

@@ -16,7 +16,7 @@ class ViewController: UIViewController {
 	private var searchNextPageToken: String?
 	private var nowPlaying: YTPlayerView?
 	private var isSearching: Bool = false
-	private var expandedCell: [IndexPath: Bool] = [:]
+	private var expandedCell: [String: Bool] = [:]
 	
 	private let reuseIdentifier = "VideoCell"
 	
@@ -139,7 +139,7 @@ extension ViewController: UISearchBarDelegate {
 
 extension ViewController: UICollectionViewDataSource {
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		return !isSearching ? items.count : searchItems.count
+		return isSearching ? searchItems.count : items.count
 	}
 	
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -147,10 +147,11 @@ extension ViewController: UICollectionViewDataSource {
 		cell.backgroundColor = .white
 		cell.videoStateDelegate = self
 		cell.descriptionDelegate = self
-		if expandedCell[indexPath] != nil {
-			cell.expand = expandedCell[indexPath]!
+		let video = isSearching ? Video(item: searchItems[indexPath.row]) : Video(item: items[indexPath.row])
+		if expandedCell[video.id] != nil {
+			cell.expand = expandedCell[video.id]!
 		}
-		cell.video = !isSearching ? Video(item: items[indexPath.row]) : Video(item: searchItems[indexPath.row])
+		cell.video = video
 		cell.indexPath = indexPath
 		cell.layoutIfNeeded()
 		return cell
@@ -175,12 +176,12 @@ extension ViewController: UICollectionViewDelegate {
 
 extension ViewController: UICollectionViewDelegateFlowLayout {
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-		let video = !isSearching ? Video(item: items[indexPath.row]) : Video(item: searchItems[indexPath.row])
+		let video = isSearching ? Video(item: searchItems[indexPath.row]) : Video(item: items[indexPath.row])
 		let width = view.frame.width
 		let estimatedHeight = view.frame.height
 		let dummyCell = VideoCell(frame: CGRect(x: 0, y: 0, width: width, height: estimatedHeight))
-		if expandedCell[indexPath] != nil {
-			dummyCell.expand = expandedCell[indexPath]!
+		if expandedCell[video.id] != nil {
+			dummyCell.expand = expandedCell[video.id]!
 		}
 		dummyCell.video = video
 		dummyCell.layoutIfNeeded()
@@ -209,8 +210,8 @@ extension ViewController: VideoStateDelegate {
 // MARK: - DescriptionDelegate Extension
 
 extension ViewController: DescriptionDelegate {
-	func handleMore(expand: Bool, indexPath: IndexPath) {
-		expandedCell[indexPath] = expand
+	func handleMore(expand: Bool, indexPath: IndexPath, id: String) {
+		expandedCell[id] = expand
 		videoCollectionView.reloadItems(at: [indexPath])
 	}
 }
