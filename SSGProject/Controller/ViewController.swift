@@ -16,7 +16,7 @@ class ViewController: UIViewController {
 	private var searchNextPageToken: String?
 	private var nowPlaying: YTPlayerView?
 	private var isSearching: Bool = false
-	private var expandedCell: [String: Bool] = [:]
+	private var expandedCell = Set<String>()
 	
 	private let reuseIdentifier = "VideoCell"
 	
@@ -148,8 +148,8 @@ extension ViewController: UICollectionViewDataSource {
 		cell.videoStateDelegate = self
 		cell.descriptionDelegate = self
 		let video = isSearching ? Video(item: searchItems[indexPath.row]) : Video(item: items[indexPath.row])
-		if expandedCell[video.id] != nil {
-			cell.expand = expandedCell[video.id]!
+		if !expandedCell.isEmpty, expandedCell.contains(video.id) {
+			cell.expand = true
 		}
 		cell.video = video
 		cell.indexPath = indexPath
@@ -180,8 +180,8 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
 		let width = view.frame.width
 		let estimatedHeight = view.frame.height
 		let dummyCell = VideoCell(frame: CGRect(x: 0, y: 0, width: width, height: estimatedHeight))
-		if expandedCell[video.id] != nil {
-			dummyCell.expand = expandedCell[video.id]!
+		if !expandedCell.isEmpty, expandedCell.contains(video.id) {
+			dummyCell.expand = true
 		}
 		dummyCell.video = video
 		dummyCell.layoutIfNeeded()
@@ -211,7 +211,11 @@ extension ViewController: VideoStateDelegate {
 
 extension ViewController: DescriptionDelegate {
 	func handleMore(expand: Bool, indexPath: IndexPath, id: String) {
-		expandedCell[id] = expand
+		if expand {
+			expandedCell.insert(id)
+		} else {
+			expandedCell.remove(id)
+		}
 		videoCollectionView.reloadItems(at: [indexPath])
 	}
 }

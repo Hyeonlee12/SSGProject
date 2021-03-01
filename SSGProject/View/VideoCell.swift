@@ -52,7 +52,7 @@ class VideoCell: UICollectionViewCell {
 	
 	private let descriptionLabel: UILabel = {
 		let label = UILabel()
-		label.text = "description description description description description description description description description description description description description description "
+		label.text = "description"
 		
 		return label
 	}()
@@ -82,6 +82,7 @@ class VideoCell: UICollectionViewCell {
 	override func prepareForReuse() {
 		super.prepareForReuse()
 		
+		expand = false
 		titleLabel.text = ""
 		publishedAtLabel.text = ""
 		descriptionLabel.text = ""
