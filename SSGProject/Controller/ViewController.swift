@@ -13,7 +13,9 @@ class ViewController: UIViewController {
 	private var items = [Item]()
 	private var searchItems = [SearchItem]()
 	private var nextPageToken: String?
+	private var searchNextPageToken: String?
 	private var nowPlaying: YTPlayerView?
+	private var isSearching: Bool = false
 	
 	private let reuseIdentifier = "VideoCell"
 	
@@ -81,7 +83,29 @@ class ViewController: UIViewController {
 			}
 		}
 	}
+	
+	func searchLists(searchText: String) {
+		ApiService.searchList(searchText: searchText, nextPageToken: searchNextPageToken) { list, error in
+			if let error = error {
+				print("ERROR: \(error)")
+				let alert = UIAlertController(title: "실패", message: "잠시 후에 다시 시도해 주세요.", preferredStyle: .alert)
+				let button = UIAlertAction(title: "OK", style: .default, handler: nil)
+				alert.addAction(button)
+				
+				self.present(alert, animated: true, completion: nil)
+			}
+			if let list = list {
+				self.searchItems.append(contentsOf: list.items)
+				self.searchNextPageToken = list.nextPageToken
+				DispatchQueue.main.async {
+					self.videoCollectionView.reloadData()
+				}
+			}
+		}
+	}
 }
+
+// MARK: - UISearchBarDelegate Extension
 
 extension ViewController: UISearchBarDelegate {
 	func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -90,19 +114,31 @@ extension ViewController: UISearchBarDelegate {
 		if let cancelButton : UIButton = searchBar.value(forKey: "cancelButton") as? UIButton{
 			cancelButton.isEnabled = true
 		}
+		isSearching = true
+		searchItems = []
+		if let searchText = searchBar.text {
+			videoCollectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: false)
+			searchLists(searchText: searchText)
+		}
 	}
 	
 	func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
 		searchBar.resignFirstResponder()
 		searchBar.text = ""
 		searchBar.showsCancelButton = false
+		isSearching = false
+		searchItems = []
+		videoCollectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top
+																		 , animated: false)
+		videoCollectionView.reloadData()
 	}
 }
 
 // MARK: - UICollectionViewDataSource Extension
+
 extension ViewController: UICollectionViewDataSource {
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		return items.count
+		return !isSearching ? items.count : searchItems.count
 	}
 	
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -110,30 +146,37 @@ extension ViewController: UICollectionViewDataSource {
 		cell.backgroundColor = .white
 		cell.videoStateDelegate = self
 		cell.descriptionDelegate = self
-		cell.video = Video(item: items[indexPath.row])
+		cell.video = !isSearching ? Video(item: items[indexPath.row]) : Video(item: searchItems[indexPath.row])
 		cell.layoutIfNeeded()
 		return cell
 	}
 }
 
 // MARK: - UICollectionViewDelegate Extension
+
 extension ViewController: UICollectionViewDelegate {
 	func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-		if indexPath.item == items.count - 1, let _ = nextPageToken {
+		if !isSearching, indexPath.item == items.count - 1, let _ = nextPageToken {
 			getVideoLists()
+		}
+		
+		if isSearching, indexPath.item == searchItems.count - 1, let _ = nextPageToken {
+			searchLists(searchText: searchBar.text!)
 		}
 	}
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout Extension
+
 extension ViewController: UICollectionViewDelegateFlowLayout {
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-		let video = Video(item: items[indexPath.row])
-		return .init(width: view.frame.width, height: view.frame.width * video.ratio + 120)
+		let video = !isSearching ? Video(item: items[indexPath.row]) : Video(item: searchItems[indexPath.row])
+		return .init(width: view.frame.width, height: view.frame.width * video.ratio + 130)
 	}
 }
 
 // MARK: - VideoStateDelegate Extension
+
 extension ViewController: VideoStateDelegate {
 	func tapToPlay(playerView: YTPlayerView) {
 		if let nowPlaying = nowPlaying {
@@ -150,6 +193,7 @@ extension ViewController: VideoStateDelegate {
 }
 
 // MARK: - DescriptionDelegate Extension
+
 extension ViewController: DescriptionDelegate {
 	func handleMore(height: CGFloat) {
 		videoCollectionView.reloadItems(at: [IndexPath(row: 0, section: 0)])

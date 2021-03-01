@@ -32,6 +32,7 @@ class VideoCell: UICollectionViewCell {
 		let label = UILabel()
 		label.text = "title title title"
 		label.lineBreakMode = .byTruncatingTail
+		label.setContentHuggingPriority(.defaultHigh, for: .vertical)
 		
 		return label
 	}()
@@ -47,6 +48,8 @@ class VideoCell: UICollectionViewCell {
 		let label = UILabel()
 		label.text = "description description description description description description description description description description description description description description "
 		label.numberOfLines = 2
+//		label.setContentHuggingPriority(.defaultLow, for: .vertical)
+		label.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
 		
 		return label
 	}()
@@ -55,6 +58,7 @@ class VideoCell: UICollectionViewCell {
 		let button = UIButton()
 		button.setTitle("더보기 >", for: .normal)
 		button.backgroundColor = .lightGray
+		button.setHeight(height: 30)
 		button.setTitleColor(.black, for: .normal)
 		
 		return button
@@ -111,7 +115,7 @@ class VideoCell: UICollectionViewCell {
 		publishedAtLabel.text = dateFormatterPrint.string(from: date!)
 		descriptionLabel.text = video?.description
 		
-		videoView.setHeight(height: frame.width * CGFloat(video?.ratio ?? 3/4))
+//		videoView.setHeight(height: frame.width * CGFloat(video?.ratio ?? 3/4))
 		videoView.load(withVideoId: video!.id, playerVars: ["playsinline": 1])
 	}
 	
