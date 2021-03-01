@@ -16,6 +16,7 @@ class ViewController: UIViewController {
 	private var searchNextPageToken: String?
 	private var nowPlaying: YTPlayerView?
 	private var isSearching: Bool = false
+	private var expandedCell: [IndexPath: Bool] = [:]
 	
 	private let reuseIdentifier = "VideoCell"
 	
@@ -146,7 +147,11 @@ extension ViewController: UICollectionViewDataSource {
 		cell.backgroundColor = .white
 		cell.videoStateDelegate = self
 		cell.descriptionDelegate = self
+		if expandedCell[indexPath] != nil {
+			cell.expand = expandedCell[indexPath]!
+		}
 		cell.video = !isSearching ? Video(item: items[indexPath.row]) : Video(item: searchItems[indexPath.row])
+		cell.indexPath = indexPath
 		cell.layoutIfNeeded()
 		return cell
 	}
@@ -171,7 +176,16 @@ extension ViewController: UICollectionViewDelegate {
 extension ViewController: UICollectionViewDelegateFlowLayout {
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 		let video = !isSearching ? Video(item: items[indexPath.row]) : Video(item: searchItems[indexPath.row])
-		return .init(width: view.frame.width, height: view.frame.width * video.ratio + 130)
+		let width = view.frame.width
+		let estimatedHeight = view.frame.height
+		let dummyCell = VideoCell(frame: CGRect(x: 0, y: 0, width: width, height: estimatedHeight))
+		if expandedCell[indexPath] != nil {
+			dummyCell.expand = expandedCell[indexPath]!
+		}
+		dummyCell.video = video
+		dummyCell.layoutIfNeeded()
+		let estimatedSize = dummyCell.systemLayoutSizeFitting(CGSize(width: width, height: estimatedHeight))
+		return CGSize(width: width, height: estimatedSize.height)
 	}
 }
 
@@ -195,7 +209,8 @@ extension ViewController: VideoStateDelegate {
 // MARK: - DescriptionDelegate Extension
 
 extension ViewController: DescriptionDelegate {
-	func handleMore(height: CGFloat) {
-		videoCollectionView.reloadItems(at: [IndexPath(row: 0, section: 0)])
+	func handleMore(expand: Bool, indexPath: IndexPath) {
+		expandedCell[indexPath] = expand
+		videoCollectionView.reloadItems(at: [indexPath])
 	}
 }

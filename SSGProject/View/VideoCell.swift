@@ -13,7 +13,7 @@ protocol VideoStateDelegate: class {
 }
 
 protocol DescriptionDelegate: class {
-	func handleMore(height: CGFloat)
+	func handleMore(expand: Bool, indexPath: IndexPath)
 }
 
 class VideoCell: UICollectionViewCell {
@@ -22,8 +22,14 @@ class VideoCell: UICollectionViewCell {
 	
 	weak var videoStateDelegate: VideoStateDelegate?
 	weak var descriptionDelegate: DescriptionDelegate?
+	var expand: Bool = false
+	var indexPath: IndexPath?
+	
 	var video: Video? {
-		didSet { configure() }
+		didSet {
+			configure()
+			loadVideo()
+		}
 	}
 	
 	private let videoView = YTPlayerView()
@@ -47,9 +53,6 @@ class VideoCell: UICollectionViewCell {
 	private let descriptionLabel: UILabel = {
 		let label = UILabel()
 		label.text = "description description description description description description description description description description description description description description "
-		label.numberOfLines = 2
-//		label.setContentHuggingPriority(.defaultLow, for: .vertical)
-		label.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
 		
 		return label
 	}()
@@ -74,6 +77,17 @@ class VideoCell: UICollectionViewCell {
 	
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
+	}
+	
+	override func prepareForReuse() {
+		super.prepareForReuse()
+		
+		titleLabel.text = ""
+		publishedAtLabel.text = ""
+		descriptionLabel.text = ""
+		descriptionLabel.sizeToFit()
+		setNeedsLayout()
+		layoutIfNeeded()
 	}
 	
 	// MARK: - Helpers
@@ -114,16 +128,22 @@ class VideoCell: UICollectionViewCell {
 		titleLabel.text = video?.title
 		publishedAtLabel.text = dateFormatterPrint.string(from: date!)
 		descriptionLabel.text = video?.description
+		descriptionLabel.numberOfLines = expand ? 0 : 2
+		descriptionLabel.sizeToFit()
+		moreButton.setTitle(expand ? "접기 <" : "더보기 >", for: .normal)
 		
-//		videoView.setHeight(height: frame.width * CGFloat(video?.ratio ?? 3/4))
+		videoView.setHeight(height: frame.width * CGFloat(video?.ratio ?? 3/4))
+	}
+	
+	func loadVideo() {
 		videoView.load(withVideoId: video!.id, playerVars: ["playsinline": 1])
 	}
 	
 	// MARK: - Selectors
 	
 	@objc func handleMoreButton(_ sender: UIButton) {
-		descriptionLabel.numberOfLines = 0
-		self.descriptionDelegate?.handleMore(height: descriptionLabel.frame.height)
+		expand = !expand
+		self.descriptionDelegate?.handleMore(expand: expand, indexPath: indexPath!)
 	}
 }
 
