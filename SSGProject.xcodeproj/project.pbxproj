@@ -15,6 +15,11 @@
 		F41A699A25EC69A40050F70B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F41A699825EC69A40050F70B /* LaunchScreen.storyboard */; };
 		F41A69A525EC6E4B0050F70B /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41A69A425EC6E4B0050F70B /* Extensions.swift */; };
 		F41A69B925EC73710050F70B /* VideoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41A69B825EC73710050F70B /* VideoCell.swift */; };
+		F41A69BC25EC8E760050F70B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41A69BB25EC8E760050F70B /* Constants.swift */; };
+		F41A69BF25EC90EB0050F70B /* ListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41A69BE25EC90EB0050F70B /* ListResponse.swift */; };
+		F41A69C225EC94A10050F70B /* SearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41A69C125EC94A10050F70B /* SearchResponse.swift */; };
+		F41A69C525EC98130050F70B /* ApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41A69C425EC98130050F70B /* ApiService.swift */; };
+		F41A69C825ECA7AA0050F70B /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41A69C725ECA7AA0050F70B /* Video.swift */; };
 		FF5051791D33F91C5F5AFF7D /* Pods_SSGProject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 472812A7E113A0145751BE40 /* Pods_SSGProject.framework */; };
 /* End PBXBuildFile section */
 
@@ -33,6 +38,11 @@
 		F41A69A425EC6E4B0050F70B /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		F41A69B225EC72B80050F70B /* SSGProject-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SSGProject-Bridging-Header.h"; sourceTree = "<group>"; };
 		F41A69B825EC73710050F70B /* VideoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCell.swift; sourceTree = "<group>"; };
+		F41A69BB25EC8E760050F70B /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		F41A69BE25EC90EB0050F70B /* ListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ListResponse.swift; path = ../../../../../ListResponse.swift; sourceTree = "<group>"; };
+		F41A69C125EC94A10050F70B /* SearchResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResponse.swift; sourceTree = "<group>"; };
+		F41A69C425EC98130050F70B /* ApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiService.swift; sourceTree = "<group>"; };
+		F41A69C725ECA7AA0050F70B /* Video.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +115,7 @@
 			isa = PBXGroup;
 			children = (
 				F41A69A425EC6E4B0050F70B /* Extensions.swift */,
+				F41A69BB25EC8E760050F70B /* Constants.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -128,6 +139,9 @@
 		F41A69A925EC711E0050F70B /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				F41A69BE25EC90EB0050F70B /* ListResponse.swift */,
+				F41A69C125EC94A10050F70B /* SearchResponse.swift */,
+				F41A69C725ECA7AA0050F70B /* Video.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -135,6 +149,7 @@
 		F41A69AA25EC71270050F70B /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				F41A69C425EC98130050F70B /* ApiService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -256,9 +271,14 @@
 			files = (
 				F41A69B925EC73710050F70B /* VideoCell.swift in Sources */,
 				F41A699225EC69A10050F70B /* ViewController.swift in Sources */,
+				F41A69BF25EC90EB0050F70B /* ListResponse.swift in Sources */,
 				F41A698E25EC69A10050F70B /* AppDelegate.swift in Sources */,
+				F41A69C225EC94A10050F70B /* SearchResponse.swift in Sources */,
+				F41A69C525EC98130050F70B /* ApiService.swift in Sources */,
 				F41A699025EC69A10050F70B /* SceneDelegate.swift in Sources */,
 				F41A69A525EC6E4B0050F70B /* Extensions.swift in Sources */,
+				F41A69BC25EC8E760050F70B /* Constants.swift in Sources */,
+				F41A69C825ECA7AA0050F70B /* Video.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
